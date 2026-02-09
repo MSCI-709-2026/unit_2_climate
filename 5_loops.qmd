@@ -30,7 +30,7 @@ for (value in that) {
 The `that` object should be a set of objects (often a vector of numbers or character strings). The for loop will run the code that appears between the braces once for each member of `that`. For example, the for loop below runs `print("one run")` once for each element in the vector `c(1,2,3,4)`:
 
 ```{r}
-for (i in c(1:4)) {
+for (i in c(1:5)) {
   print(c("one run", i))
 }
 ```
@@ -162,7 +162,7 @@ while (condition) {
 
 `while` will rerun `condition`, which should be a logical test, at the start of each loop. If `condition` evaluates to `TRUE`, `while` will run the code between its braces. If `condition` evaluates to `FALSE`, `while` will finish the loop. 
 
-Why might `condition` change from `TRUE` to `FALSE`? Presumably because the code inside your loop has changed whether the condition is still `TRUE`. If the code has no relationship to the condition, a `while` loop will run until you stop it. So be careful not to create an `infinite loop`. You can stop a `while` loop by hitting Escape or by clicking on the stop-sign icon at the top of the RStudio console pane. The icon will appear once the loop begins to run. For example, this loop will run forever:
+Why might `condition` change from `TRUE` to `FALSE`? Presumably because the code inside your loop has changed whether the condition is still `TRUE`. If the code has no relationship to the condition, a `while` loop will run until you stop it. So be careful not to create an `infinite loop`. You can stop a `while` loop by hitting `CTRL + C` on your keyboard, or by clicking on the red square icon at the top of the Positron console pane. The red square icon will appear once the loop begins to run. For example, this loop will run forever:
 
 ```r
 x = 1
@@ -204,7 +204,7 @@ This code will probably result in our fisherman catching about 25 fish, since I 
 
 ### Exercise 5.2
 
-Use a while loop to build a simple number matching game. Pick a number between 1 and 10 outside of the loop. Then, inside the loop, step through 1 to 10 and test if that iteration of the loop has guessed the correct number. At the end, print out the number of guesses it took for your loop to guess the right number. You could make this game fancier by stepping through random numbers inside the loop to guess the right number using `guess=round(runif(n=1, min=1, max=10))`
+Use a while loop to build a simple number matching game. Pick an integer between 1 and 10 outside of the loop. Then, inside the loop, step through 1 to 10 and test if that iteration of the loop has guessed the correct number. At the end, print out the number of guesses it took for your loop to guess the right number. You could make this game fancier by stepping through random numbers inside the loop to guess the right number using `guess=round(runif(n=1, min=1, max=10))`
 
 ***
 

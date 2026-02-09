@@ -51,7 +51,7 @@ max(co2$monthly_average)
 Woah. When I started grad school, atmospheric CO2 was in the 380s and I put in a lot of activist energy towards getting it below 350 ppm by organizing talks and rallies, driving to NYC and D.C. for protests, etc. Let's plot the monthly average atmospheric CO2 concentration (in ppm) to examine the Keeling curve:
 
 ```{r}
-plot(monthly_average ~ decimal_date, type="l", data=co2) 
+plot(monthly_average ~ decimal_date, data=co2, type="l") 
 ```
 
 NASA was kind enough to include the de-seasonalized data. That means they removed the monthly cycle so that we could see the trend over time more easily. Let's plot the de-seasonalized data over the monthly average data. We'll also make our plot prettier by specifying the axes titles and the main figure title.
@@ -59,7 +59,7 @@ NASA was kind enough to include the de-seasonalized data. That means they remove
 ```{r}
 #Note '+' keeps lines together so RMarkdown doesn't close the plot before all elements are added
 plot(monthly_average ~ decimal_date, type="l", data=co2, ylab="CO2 ppm", xlab="Year", main="Keeling Curve") + 
-lines(y=co2$deseasonalized, x=co2$decimal_date, col="red")
+lines(deseasonalized ~ decimal_date, data=co2, col="red")
 ```
 
 This is pretty great, so let's save this gorgeous figure and brag about it to all of our friends.
@@ -99,19 +99,19 @@ head(co2)
 
 To subset our data, we can write a boolean expression to create a vector of logical variables, which we have already done a bit in previous lessons. We can also use the `which()` function to return just the indices of the elements in the vector that meet some logical criteria. Subsetting is an important and common activity in R (and data science in general) so it's good to be exposed to multiple ways that you may see programmers accomplish the same task. There are still other ways to subset, including using the `subset()` function (which is used less commonly) or using `filter()` in the `dplyr` package (which is very common and we'll cover it later). 
 
-So to grab the last 5 years of data, we only want values of `co2$decimal_date` greater than 2020. We can use a conditional statement `>` to signal values *greater than* 2020:
+So to grab the last 5 years of data, we only want values of `co2$decimal_date` greater than 2021. We can use a conditional statement `>` to signal values *greater than* 2021:
 
 ```{r}
 # Showing 2 ways to subset
-summary(co2$decimal_date > 2020) # vector of TRUES and FALSES
-summary(which(co2$decimal_date > 2020)) # vector of indices that meet condition (see ?which for bells and whistles)
+summary(co2$decimal_date > 2021) # vector of TRUES and FALSES
+summary(which(co2$decimal_date > 2021)) # vector of indices that meet condition (see ?which for bells and whistles)
 
 # Either method can be used to subset the data
-co2_2020to2025 = co2[co2$decimal_date > 2020,]
-co2_2020to2025 = co2[which(co2$decimal_date > 2020),]
-summary(co2_2020to2025)
+co2_2021to2026 = co2[co2$decimal_date > 2021,]
+co2_2021to2026 = co2[which(co2$decimal_date > 2021),]
+summary(co2_2021to2026)
 
-plot(seasonal_cycle ~ decimal_date, type="l", data=co2_2020to2025) 
+plot(seasonal_cycle ~ decimal_date, type="l", data=co2_2021to2026) 
 ```
 
 It's a little hard to figure out which month is which on this plot. Let's make a table that shows the average CO2 anomaly for each month over the time series. We can calculate the monthly anomaly for January by subsetting only data where `month==1` and then taking the mean of our `seasonal_cycle` variable. 
@@ -125,7 +125,7 @@ jan_anomalies = co2$seasonal_cycle[which(co2$month==1)]
 mean(jan_anomalies) 
 ```
 
-Now let's calculate the average monthly anomaly for all 12 months. To do this, let's make a new data.frame that will hold our results. It should have two columns: one for month and one for the average anomaly for that month. Then we can calculate the average anomaly for each month, just like we did above, and insert in into the right spot in our data.frame:
+Now let's calculate the average monthly anomaly for all 12 months. To do this, let's make a new data.frame that will hold our results. It should have two columns: one for month and one for the average anomaly for that month. Then we can calculate the average anomaly for each month, just like we did above, and insert it into the right spot in our data.frame:
 
 ```{r}
 head(co2)
@@ -160,6 +160,6 @@ The seasonal cycle reveals that CO2 concentrations decrease during periods corre
 
 ### Exercise 4.1
 
-As a result of climate change, there have been many phenological changes in the physical and biological environment. That means that there is a shift in the timing of seasonal phenomena and activities. One of the most obvious examples of this is that as many parts of the world warm, the spring growing season for plants is starting a bit earlier each spring. Plot the seasonal cycle of co2 for 1959 (the first full year of data) and 2019 (the last full year of data) on the same figure. What do you notice? Is this a robust analysis to determine if there has been a phenological shift in global carbon uptake / respiration?
+As a result of climate change, there have been many phenological changes in the physical and biological environment. That means that there is a shift in the timing of seasonal phenomena and activities. One of the most obvious examples of this is that as many parts of the world warm, the spring growing season for plants is starting a bit earlier each spring. Plot the seasonal cycle of co2 for 1959 (the first full year of data) and 2025 (the last full year of data) on the same figure. What do you notice? Is this a robust analysis to determine if there has been a phenological shift in global carbon uptake / respiration?
 
 ***

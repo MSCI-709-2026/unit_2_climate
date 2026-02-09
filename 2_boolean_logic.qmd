@@ -1,9 +1,12 @@
 ---
 title: "2.2: Boolean logic"
-format:
+format: 
   html:
     embed-resources: true
 ---
+
+  html:
+    embed-resources: true
 
 ```{r}
 #| include: false

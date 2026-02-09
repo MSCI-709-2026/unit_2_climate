@@ -25,7 +25,7 @@ knitr::opts_chunk$set(fig.width=6, fig.asp = 0.618, collapse=TRUE)
 NASA's Goddard Institute of Space Studies (outside Washington D.C.) has created an annual global land-ocean temperature index. Many of the last years have set new records on global temperature. In this section we will download, explore and analyze global mean temperature data.
 
 ```{r}
-# temp_anomaly = read.table("data/global_temp_data_1880-2022.txt", skip=5, sep="", header = FALSE, col.names = c("Year", "No_Smoothing", "Lowess_5"))
+# temp_anomaly = read.table("data/global_temp_data_1880-2025.txt", skip=5, sep="", header = FALSE, col.names = c("Year", "No_Smoothing", "Lowess_5"))
 url = 'https://data.giss.nasa.gov/gistemp/graphs/graph_data/Global_Mean_Estimates_based_on_Land_and_Ocean_Data/graph.txt'
 temp_anomaly = read.delim(url, skip=5, sep="", header=FALSE, col.names = c("Year", "No_Smoothing", "Lowess_5"))
 class(temp_anomaly)
@@ -33,7 +33,7 @@ head(temp_anomaly)
 dim(temp_anomaly)
 summary(temp_anomaly)
 
-plot(No_Smoothing ~ Year, data=temp_anomaly, ylab="Global mean temperature anomaly") + # type="b") #as points
+plot(No_Smoothing ~ Year, data=temp_anomaly, ylab="Global mean temperature anomaly (*C)") + #as points
   lines(No_Smoothing ~ Year, data=temp_anomaly) + #as a line
   lines(Lowess_5 ~ Year, data=temp_anomaly, col="red", lwd=2) 
 ```
@@ -61,7 +61,7 @@ plot(No_Smoothing ~ Year, data=temp_anomaly, ylab="Global mean temperature anoma
   lines(Lowess_5 ~ Year, data=temp_anomaly, col="red") +
   abline(v=1998, lty="dashed") +
   abline(v=2012, lty="dashed") +
-  lines(c(temp_1998, temp_2012)~c(1998, 2012), col="blue", lwd=2) # used the lwd parameter to thicken the line. See ?par
+  lines(c(temp_1998, temp_2012) ~ c(1998, 2012), col="blue", lwd=2) # used the lwd parameter to thicken the line. See ?par
 ```
 
 Now that we can see the 1998-2012 trend that was discussed in the 2013 IPCC report, it does seem like the rate of warming has slowed way down. However, now that we have the luxury of another decade of data, those dates seem completely cherry-picked and there is no observable slow-down to speak of.
@@ -100,7 +100,7 @@ tail(temp_anomaly)
 
 plot(No_Smoothing ~ Year, data=temp_anomaly, ylab="Global mean temperature anomaly") + 
   lines(No_Smoothing ~ Year, data=temp_anomaly) +
-  lines(avg_5_yr ~ Year, data=temp_anomaly, col="red") 
+  lines(avg_5_yr ~ Year, data=temp_anomaly, col="green") 
 ```
 
 Let's save this plot as a PDF file so we can put it in a publication, powerpoint, or just show it to Grandma at Thanksgiving:
@@ -121,7 +121,7 @@ Calculate the 10-year and 20-year rolling averages of the temperature anomaly da
 
 ***
 
-Do you see the advantage of this? Once your rolling average user defined function has been written, you can repeat this type of calculation on any of your diverse datasets with a very easy-to-use line of code.
+Do you see the advantage of this? Once your rolling average user defined function has been written, you can repeat this type of calculation on any of your diverse datasets with a single, easy-to-understand (`calc_rolling_average()`) line of code.
 
 To use this function in future code, you can copy and paste the function at the top of your new R scripts. Or you could save it in an `.R` script on its own and import that script at the top of any new R scripts that you build using the `source()` function. If you were really ambitious, you could put your function into a time series analysis package and make it available on CRAN.
 

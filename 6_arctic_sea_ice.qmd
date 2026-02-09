@@ -27,17 +27,18 @@ The Sea Ice Index provides a quick look at Arctic- and Antarctic-wide changes in
 # arctic_ice = read.csv("data/N_seaice_extent_daily_v4.0.csv", skip=2, header = FALSE, col.names = c("Year", "Month", "Day", "Extent", "Missing", "Source_Data"))
 
 url = "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v4.0.csv"
-arctic_ice = read.delim(url, skip=2, sep=",", header=FALSE, col.names = c("Year", "Month", "Day", "Extent", "Missing", "Source_Data"))
+# arctic_ice = read.delim(url, skip=2, sep=",", header=FALSE, col.names = c("Year", "Month", "Day", "Extent", "Missing", "Source_Data"))
+arctic_ice = read.csv(url, skip=2, col.names = c("Year", "Month", "Day", "Extent", "Missing", "Source_Data"))
 tail(arctic_ice)
 ```
 
 Notice that unlike in previous data sets, the date information is split into three columns: year, month, day. This will make it harder to plot a time series since we can only plot one variable along the x axis. We could do the math to turn the month and day variables into decimal dates. Another, simpler, option is to take advantage of the `lubridate` package that was designed by other R users. Installing, loading and using functions from R packages can save you loads of time and dramatically increase the functionality of the R language. We will use many other packages throughout the course.
 
-First, we need to install the `lubridate` package from the CRAN library. You can do this in RStudio using the top menu: `Tools -> Install packages...`. Then type the name of the package you want (lubridate) into the text box, make sure the `Install Dependencies` box is checked and click `Install`. Or you can simply do it at your command line with the function `install.packages("lubridate")`. Once installed, you need to load the package functions into your environment with the `library()` function. Now that the `lubridate` package is loaded up, we can use the function `make_date()` to transform your year, month and day into a `date` type variable. Don't forget you can use the command `?make_date` to find out more about the function (or just search for the function in the Help tab of the lower left panel in RStudio).
+First, we need to install the `lubridate` package from the CRAN library. You can do this in your R Console with the function `install.packages("lubridate")`. Once installed, you need to load the package functions into your environment with the `library()` function. Now that the `lubridate` package is loaded up, we can use the function `make_date()` to transform your year, month and day into a `date` type variable. Don't forget you can use the command `?make_date` to find out more about the function.
 
 ```{r}
-# install.packages("lubridate")
-library("lubridate")  # make_date()
+# install.packages("lubridate") # do this once
+library("lubridate")  # make_date() # do this every R session
 
 arctic_ice$date = make_date(year = arctic_ice$Year, month = arctic_ice$Month, day = arctic_ice$Day)
 # arctic_ice$decimal_date = decimal_date(arctic_ice$date) # If you wanted decimal date, but this isn't necessary
@@ -69,7 +70,7 @@ plot(extent_annual_avg ~ Year, data=arctic_ice_averages, type="l")
 # 5-year average:
 for (i in seq(3, dim(arctic_ice_averages)[1]-2)) # skip the first 2 and last 2 years
 {
-  years = c((arctic_ice_averages$Year[i]-2):(arctic_ice_averages$Year[i]+2))
+  years = seq(from = (arctic_ice_averages$Year[i]-2), to = (arctic_ice_averages$Year[i]+2))
   arctic_ice_averages$extent_5yr_avg[i] = mean(arctic_ice$Extent[arctic_ice$Year %in% years])
 }
 
