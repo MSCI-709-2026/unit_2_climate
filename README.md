@@ -23,7 +23,7 @@ HW2 repo link: <https://classroom.github.com/a/508SAYo_>
 
 -  HW_3_ice_core_co2 - Assigned: 2/10/2026, Due: 2/17/2026
 
-HW3 repo link: TBD
+HW3 repo link: <https://classroom.github.com/a/_I4fWDvt>
 
 ***
 
